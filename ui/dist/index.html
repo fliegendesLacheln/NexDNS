@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXDNS — Advanced Network & DNS Manager</title>
+  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body data-theme="midnight-purple">
+
+<svg class="icon-definitions" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="icon-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol>
+  <symbol id="icon-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+  <symbol id="icon-zap" viewBox="0 0 24 24"><path d="m13 2-3 8h7l-6 12 1-9H5l8-11z"/></symbol>
+  <symbol id="icon-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="icon-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+  <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="icon-x" viewBox="0 0 24 24"><path d="m18 6-12 12M6 6l12 12"/></symbol>
+  <symbol id="icon-rotate" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15.4-6.4L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.4 6.4L3 16"/><path d="M3 21v-5h5"/></symbol>
+  <symbol id="icon-undo" viewBox="0 0 24 24"><path d="M3 7v6h6"/><path d="M5 13a8 8 0 1 0 2.3-5.7L3 11"/></symbol>
+  <symbol id="icon-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8"/></symbol>
+  <symbol id="icon-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></symbol>
+  <symbol id="icon-lightbulb" viewBox="0 0 24 24"><path d="M9 18h6M10 22h4"/><path d="M8 14a7 7 0 1 1 8 0c-.8.6-1 1.2-1 2h-6c0-.8-.2-1.4-1-2z"/></symbol>
+  <symbol id="icon-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
+  <symbol id="icon-alert" viewBox="0 0 24 24"><path d="m10.3 3.9-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3.1l-8-14a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></symbol>
+  <symbol id="icon-loader" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83m8.48 8.48 2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48 2.83-2.83"/></symbol>
+</svg>
+
+<div class="app-container">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="brand-mark-gradient" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0%" stop-color="#1dccE0"/>
+              <stop offset="50%" stop-color="#f472b6"/>
+              <stop offset="100%" stop-color="#66e2bf"/>
+            </linearGradient>
+          </defs>
+          <path fill="url(#brand-mark-gradient)" d="M5 19V5h3l8 9V5h3v14h-3l-8-9v9z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-title">NEXDNS</div>
+        <div class="brand-badge">PRO EDITION</div>
+      </div>
+    </div>
+
+    <ul class="nav-menu">
+      <li class="nav-item active" data-page="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+        <span>Dashboard</span>
+      </li>
+      <li class="nav-item" data-page="dns">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <span>DNS Manager</span>
+      </li>
+      <li class="nav-item" data-page="apps">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+        <span>Application Manager</span>
+      </li>
+      <li class="nav-item" data-page="traffic">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <span>Traffic Monitor</span>
+      </li>
+      <li class="nav-item" data-page="discord">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6L6 18M6 6l12 12"/><circle cx="12" cy="12" r="10"/></svg>
+        <span>Discord Check</span>
+      </li>
+      <li class="nav-item" data-page="network">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+        <span>Network Info</span>
+      </li>
+      <li class="nav-item" data-page="diagnostics">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <span>Diagnostics</span>
+      </li>
+      <li class="nav-item" data-page="settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span>Settings</span>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <div class="status-indicator">
+        <span class="status-dot" id="global-status-dot"></span>
+        <span id="global-status-text">Bağlantı Aktif</span>
+      </div>
+      <div class="version-text">NEXDNS v1.0.0 VIP • Windows</div>
+    </div>
+  </aside>
+
+  <!-- MAIN WRAPPER -->
+  <div class="main-wrapper">
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 id="topbar-title">Ana Kontrol Paneli</h1>
+        <p id="topbar-sub">Gerçek zamanlı ağ durumu ve DNS yönetimi</p>
+      </div>
+
+      <div class="topbar-right">
+        <!-- SYSTEM / SELECTED APPS SLIDING SWITCH -->
+        <div class="mode-control" aria-label="DNS çalışma kapsamı">
+          <button class="mode-label active" id="mode-system-btn" type="button" title="Tüm adaptör trafiğine uygulanır">
+            <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-globe"></use></svg><span>Tüm Sistem</span>
+          </button>
+          <label class="mode-toggle" title="DNS çalışma kapsamını değiştir">
+            <input id="mode-switch-input" type="checkbox" role="switch" aria-label="Seçili uygulamalar modunu aç">
+            <span class="mode-track"></span>
+          </label>
+          <button class="mode-label" id="mode-app-btn" type="button" title="Yalnızca seçili uygulamalara uygulanır">
+            <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-target"></use></svg><span>Seçili Uygulamalar</span>
+          </button>
+        </div>
+
+        <button class="btn btn-secondary btn-sm" onclick="flushDNS()" title="Windows DNS Çözümleme Önbelleğini Temizle">
+          <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-zap"></use></svg> Flush DNS
+        </button>
+      </div>
+    </header>
+
+    <!-- CONTENT VIEWPORT -->
+    <main class="content-viewport">
+
+      <!-- ============================================== -->
+      <!-- PAGE: DASHBOARD                                -->
+      <!-- ============================================== -->
+      <section class="page active" id="page-dashboard">
+        <!-- 4 TOP METRICS -->
+        <div class="grid-4">
+          <div class="card metric-card">
+            <div class="metric-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="22" height="22"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <div>
+              <div class="metric-label">Aktif DNS Sağlayıcı</div>
+              <div class="metric-value" id="dash-provider">Cloudflare</div>
+              <div class="metric-sub">Adaptör: <span id="dash-adapter">-</span></div>
+              <div class="metric-sub">IPv4: <span id="dash-ipv4">-</span></div>
+            </div>
+          </div>
+
+          <div class="card metric-card">
+            <div class="metric-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="22" height="22"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div>
+              <div class="metric-label">DNS Gecikmesi (RTT)</div>
+              <div class="metric-value" id="dash-latency">12 ms</div>
+              <div class="metric-sub">UDP Port 53 Gerçek Ölçüm</div>
+            </div>
+          </div>
+
+          <div class="card metric-card">
+            <div class="metric-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="22" height="22"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </div>
+            <div>
+              <div class="metric-label">Anlık İndirme</div>
+              <div class="metric-value" id="dash-speed-down">0 KB/s</div>
+              <div class="metric-sub">Toplam: <span id="dash-total-down">0 B</span></div>
+            </div>
+          </div>
+
+          <div class="card metric-card">
+            <div class="metric-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="22" height="22"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            </div>
+            <div>
+              <div class="metric-label">Anlık Yükleme</div>
+              <div class="metric-value" id="dash-speed-up">0 KB/s</div>
+              <div class="metric-sub">Toplam: <span id="dash-total-up">0 B</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LIVE TRAFFIC GRAPH CARD -->
+        <div class="card" style="margin-bottom: 24px;">
+          <div class="section-header">
+            <div class="section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="18" height="18"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Canlı Ağ Trafiği (İndirme / Yükleme)
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); display: flex; gap: 14px;">
+              <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 8px; height: 8px; border-radius: 50%; background-color: var(--chart-line-down);"></span> İndirme</span>
+              <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 8px; height: 8px; border-radius: 50%; background-color: var(--chart-line-up);"></span> Yükleme</span>
+            </div>
+          </div>
+          <div style="height: 180px; width: 100%; position: relative;">
+            <svg id="chart-dashboard" class="traffic-chart" viewBox="0 0 1 1" preserveAspectRatio="none" role="img" aria-label="Canlı indirme ve yükleme trafiği grafiği"></svg>
+          </div>
+        </div>
+
+        <!-- QUICK DNS SWITCHER -->
+        <div class="section-header">
+          <div class="section-title"><svg class="icon icon-sm" aria-hidden="true"><use href="#icon-zap"></use></svg> Hızlı DNS Değiştirici</div>
+          <button class="btn btn-secondary btn-sm" onclick="navigateTo('dns')">Tüm Sağlayıcıları Gör <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-arrow-right"></use></svg></button>
+        </div>
+
+        <div class="grid-3">
+          <div class="card provider-card">
+            <div class="provider-header">
+              <div>
+                <div class="provider-name">Cloudflare</div>
+                <div class="provider-tagline">1.1.1.1 • Ultra Hızlı</div>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="applyProvider('cloudflare')">Hızlı Uygula</button>
+          </div>
+
+          <div class="card provider-card">
+            <div class="provider-header">
+              <div>
+                <div class="provider-name">Google Public DNS</div>
+                <div class="provider-tagline">8.8.8.8 • Global Anycast</div>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="applyProvider('google')">Hızlı Uygula</button>
+          </div>
+
+          <div class="card provider-card">
+            <div class="provider-header">
+              <div>
+                <div class="provider-name">Quad9</div>
+                <div class="provider-tagline">9.9.9.9 • Zararlı Yazılım Koruması</div>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="applyProvider('quad9')">Hızlı Uygula</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- PAGE: DNS MANAGER                              -->
+      <!-- ============================================== -->
+      <section class="page" id="page-dns">
+        <div class="section-header">
+          <div class="section-title">Ücretsiz & Güvenli DNS Sağlayıcıları</div>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn btn-primary btn-sm" id="btn-test-all-dns" onclick="testAllLatencies()">
+              <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-zap"></use></svg> Tüm Pingleri Test Et
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="openModal('modal-custom-dns')">
+              <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-plus"></use></svg> Özel DNS Ekle
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="resetToDHCP()">
+              <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-rotate"></use></svg> DHCP'ye Sıfırla
+            </button>
+            <button class="btn btn-secondary btn-sm" id="btn-restore-backup" onclick="restoreLatestBackup()">
+              <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-undo"></use></svg> Yedeği Geri Yükle
+            </button>
+          </div>
+        </div>
+
+        <div class="alert-box info">
+          <strong>Güvenlik Garantisi:</strong> DNS değişiklikleri yalnızca aktif ağ adaptörünüze uygulanır. Yapılan her değişiklik öncesinde Windows mevcut DNS yapılandırmanız otomatik olarak güvenli yerel JSON yedeğine kaydedilir.
+        </div>
+
+        <!-- PROVIDERS GRID -->
+        <div class="grid-3" id="providers-grid">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- PAGE: APPLICATION MANAGER                      -->
+      <!-- ============================================== -->
+      <section class="page" id="page-apps">
+        <div class="alert-box warning">
+          <strong>Uygulama Bazlı DNS Modu:</strong> Uygulama başına DNS yönlendirmesi her uygulamada doğrulanmış değildir; sonuçlar Windows izinlerine ve uygulamanın DNS davranışına bağlıdır.
+          <em>Tarayıcılarda dahili DoH (DNS over HTTPS / Güvenli DNS) etkinse, uygulama sistem DNS'ini atlayabilir.</em>
+        </div>
+
+        <div class="section-header">
+          <div class="section-title">Kayıtlı Uygulama Kuralları</div>
+        </div>
+
+        <div class="table-container" style="margin-bottom: 28px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Uygulama Adı</th>
+                <th>İşlem (Process)</th>
+                <th>Atanmış DNS</th>
+                <th>Durum</th>
+                <th>İşlem</th>
+              </tr>
+            </thead>
+            <tbody id="app-rules-tbody">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- RUNNING PROCESSES LIST -->
+        <div class="section-header">
+          <div class="section-title">Çalışan Sistem Uygulamaları</div>
+          <div style="display: flex; gap: 10px;">
+            <input type="text" class="form-control" style="width: 240px; padding: 6px 10px;" placeholder="Uygulama ara (örn. discord)..." oninput="filterRunningApps(this.value)">
+            <button class="btn btn-secondary btn-sm" onclick="pickManualExe()">
+              <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-file"></use></svg> Manuel EXE Seç
+            </button>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Görünen Ad</th>
+                <th>İşlem Adı</th>
+                <th>Konum</th>
+                <th>İşlem</th>
+              </tr>
+            </thead>
+            <tbody id="running-apps-tbody">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- PAGE: TRAFFIC MONITOR                          -->
+      <!-- ============================================== -->
+      <section class="page" id="page-traffic">
+        <div class="grid-4">
+          <div class="card metric-card">
+            <div>
+              <div class="metric-label">Anlık İndirme Hızı</div>
+              <div class="metric-value" id="traffic-speed-down">0 KB/s</div>
+              <div class="metric-sub">Gerçek Windows MIB Sayacı</div>
+            </div>
+          </div>
+          <div class="card metric-card">
+            <div>
+              <div class="metric-label">Anlık Yükleme Hızı</div>
+              <div class="metric-value" id="traffic-speed-up">0 KB/s</div>
+              <div class="metric-sub">Gerçek Windows MIB Sayacı</div>
+            </div>
+          </div>
+          <div class="card metric-card">
+            <div>
+              <div class="metric-label">Toplam İndirilen Veri</div>
+              <div class="metric-value" id="traffic-total-down">0 B</div>
+              <div class="metric-sub">Oturum / Adaptör Toplamı</div>
+            </div>
+          </div>
+          <div class="card metric-card">
+            <div>
+              <div class="metric-label">Toplam Gönderilen Veri</div>
+              <div class="metric-value" id="traffic-total-up">0 B</div>
+              <div class="metric-sub">Oturum / Adaptör Toplamı</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 24px;">
+          <div class="section-header">
+            <div class="section-title">Canlı 60 Saniyelik Trafik Akışı</div>
+          </div>
+          <div style="height: 280px; width: 100%; position: relative;">
+            <svg id="chart-traffic-full" class="traffic-chart" viewBox="0 0 1 1" preserveAspectRatio="none" role="img" aria-label="Son 60 saniyenin indirme ve yükleme trafiği grafiği"></svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- PAGE: DISCORD CHECK                            -->
+      <!-- ============================================== -->
+      <section class="page" id="page-discord">
+        <div class="section-header">
+          <div class="section-title">Discord Servis Bağlantı Tanılaması</div>
+          <button class="btn btn-primary btn-sm" id="btn-run-discord" onclick="runDiscordDiagnostics()">
+            <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-zap"></use></svg> Testleri Başlat
+          </button>
+        </div>
+
+        <div id="discord-overall-banner" class="alert-box info">
+          Discord servislerinin (Web, REST API Gateway, CDN Medya, Ses ve Çözümleme) durumunu doğrulamak için "Testleri Başlat" butonuna tıklayın.
+        </div>
+
+        <div id="discord-results-container">
+          <!-- Populated after test -->
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- PAGE: NETWORK INFORMATION                      -->
+      <!-- ============================================== -->
+      <section class="page" id="page-network">
+        <div class="section-header">
+          <div class="section-title">Ağ Adaptörleri & Yapılandırma</div>
+          <button class="btn btn-secondary btn-sm" onclick="loadNetworkPage()"><svg class="icon icon-sm" aria-hidden="true"><use href="#icon-rotate"></use></svg> Yenile</button>
+        </div>
+
+        <div id="adapters-list-container">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- PAGE: DIAGNOSTICS                              -->
+      <!-- ============================================== -->
+      <section class="page" id="page-diagnostics">
+        <div class="grid-2" style="margin-bottom: 20px;">
+          <div class="card metric-card" style="padding: 24px;">
+            <div>
+              <div class="metric-label">Ağ ve İnternet Sağlık Skoru</div>
+              <div class="metric-value" id="diag-score-value" style="font-size: 32px; color: var(--success);">--</div>
+              <div class="metric-sub">8 Aşama Derin Analiz Puanı</div>
+            </div>
+          </div>
+          <div class="card" style="display: flex; align-items: center; justify-content: center;">
+            <button class="btn btn-primary" id="btn-run-diag" style="padding: 12px 24px; font-size: 14px;" onclick="runAllDiagnostics()">
+              <svg class="icon icon-sm" aria-hidden="true"><use href="#icon-zap"></use></svg> Kapsamlı Tanılamayı Başlat
+            </button>
+          </div>
+        </div>
+
+        <div id="diagnostics-list-container">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- PAGE: SETTINGS                                 -->
+      <!-- ============================================== -->
+      <section class="page" id="page-settings">
+        <div class="section-header">
+        <div class="section-title">VIP Tema Sistemi (8 Özel Tema)</div>
+        </div>
+
+        <div class="theme-grid" style="margin-bottom: 28px;">
+          <!-- 1. Midnight Purple -->
+          <div class="theme-card" data-theme="midnight-purple" role="button" tabindex="0" aria-pressed="false" onclick="selectTheme('midnight-purple')">
+            <div class="theme-swatches">
+              <div class="swatch" style="background: #09090e;"></div>
+              <div class="swatch" style="background: #181826;"></div>
+              <div class="swatch" style="background: #8b5cf6;"></div>
+            </div>
+            <div class="theme-label">Midnight Purple</div>
+          </div>
+
+          <!-- 2. Cyber Neon -->
+          <div class="theme-card" data-theme="cyber-neon" role="button" tabindex="0" aria-pressed="false" onclick="selectTheme('cyber-neon')">
+            <div class="theme-swatches">
+              <div class="swatch" style="background: #050811;"></div>
+              <div class="swatch" style="background: #101c36;"></div>
+              <div class="swatch" style="background: #06b6d4;"></div>
+            </div>
+            <div class="theme-label">Cyber Neon</div>
+          </div>
+
+          <!-- 3. Obsidian Black -->
+          <div class="theme-card" data-theme="obsidian-black" role="button" tabindex="0" aria-pressed="false" onclick="selectTheme('obsidian-black')">
+            <div class="theme-swatches">
+              <div class="swatch" style="background: #080808;"></div>
+              <div class="swatch" style="background: #161616;"></div>
+              <div class="swatch" style="background: #f1f5f9;"></div>
+            </div>
+            <div class="theme-label">Obsidian Black</div>
+          </div>
+
+          <!-- 4. Arctic Blue -->
+          <div class="theme-card" data-theme="arctic-blue" role="button" tabindex="0" aria-pressed="false" onclick="selectTheme('arctic-blue')">
+            <div class="theme-swatches">
+              <div class="swatch" style="background: #091124;"></div>
+              <div class="swatch" style="background: #15254f;"></div>
+              <div class="swatch" style="background: #38bdf8;"></div>
+            </div>
+            <div class="theme-label">Arctic Blue</div>
+          </div>
+
+          <!-- 5. Emerald Pro -->
+          <div class="theme-card" data-theme="emerald-pro" role="button" tabindex="0" aria-pressed="false" onclick="selectTheme('emerald-pro')">
+            <div class="theme-swatches">
+              <div class="swatch" style="background: #04120a;"></div>
+              <div class="swatch" style="background: #0d2c1a;"></div>
+              <div class="swatch" style="background: #10b981;"></div>
+            </div>
+            <div class="theme-label">Emerald Pro</div>
+          </div>
+
+          <!-- 6. Crimson Elite -->
+          <div class="theme-card" data-theme="crimson-elite" role="button" tabindex="0" aria-pressed="false" onclick="selectTheme('crimson-elite')">
+            <div class="theme-swatches">
+              <div class="swatch" style="background: #100606;"></div>
+              <div class="swatch" style="background: #271212;"></div>
+              <div class="swatch" style="background: #ef4444;"></div>
+            </div>
+            <div class="theme-label">Crimson Elite</div>
+          </div>
+
+          <!-- 7. Light Professional -->
+          <div class="theme-card" data-theme="light-professional" role="button" tabindex="0" aria-pressed="false" onclick="selectTheme('light-professional')">
+            <div class="theme-swatches">
+              <div class="swatch" style="background: #f1f5f9;"></div>
+              <div class="swatch" style="background: #ffffff;"></div>
+              <div class="swatch" style="background: #2563eb;"></div>
+            </div>
+            <div class="theme-label">Light Professional</div>
+          </div>
+
+          <!-- 8. Graphite Aurora -->
+          <div class="theme-card" data-theme="graphite-aurora" role="button" tabindex="0" aria-pressed="false" onclick="selectTheme('graphite-aurora')">
+            <div class="theme-swatches">
+              <div class="swatch" style="background: #171820;"></div>
+              <div class="swatch" style="background: #262833;"></div>
+              <div class="swatch" style="background: #7c3aed;"></div>
+              <div class="swatch" style="background: #22d3ee;"></div>
+            </div>
+            <div class="theme-label">Graphite Aurora</div>
+          </div>
+        </div>
+
+        <div class="section-header">
+          <div class="section-title">Sistem Bakım & Yedekleme</div>
+        </div>
+
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <div>
+            <strong>Windows ile birlikte başlat</strong>
+            <div style="font-size: 12px; color: var(--text-muted);">Açıkken NEXDNS Windows açıldığında sistem tepsisinde başlar.</div>
+          </div>
+          <label class="switch" aria-label="Windows ile birlikte başlat">
+            <input id="auto-start-toggle" type="checkbox" role="switch" onchange="toggleAutoStart(this.checked)">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <div>
+            <strong>Windows DNS Önbelleğini Temizle</strong>
+            <div style="font-size: 12px; color: var(--text-muted);">İşletim sisteminin tuttuğu eski alan adı çözümleme kayıtlarını sıfırlar.</div>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="flushDNS()"><svg class="icon icon-sm" aria-hidden="true"><use href="#icon-zap"></use></svg> Temizle</button>
+        </div>
+
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+          <div>
+            <strong>Varsayılan Ağ Ayarlarına (DHCP) Geri Dön</strong>
+            <div style="font-size: 12px; color: var(--text-muted);">Tüm statik DNS yapılandırmasını kaldırıp modemin sağladığı otomatik DNS'e döner.</div>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="resetToDHCP()"><svg class="icon icon-sm" aria-hidden="true"><use href="#icon-rotate"></use></svg> DHCP'ye Sıfırla</button>
+        </div>
+
+        <div class="card">
+          <div style="font-weight: 700; margin-bottom: 6px;">Hakkında</div>
+          <div style="font-size: 13px; color: var(--text-muted);">
+            <strong>NEXDNS</strong> — Advanced Network & DNS Manager for Windows.<br>
+            %100 Ücretsiz, reklamsız, telemetrisiz ve yerel çalışan profesyonel ağ yönetim yazılımı.
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- MODAL: ADD APP RULE                            -->
+<!-- ============================================== -->
+<div class="modal-overlay" id="modal-add-app">
+  <div class="modal-box">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <h3 style="font-size: 16px;">Uygulama DNS Kuralı Ekle</h3>
+      <button class="modal-close" type="button" aria-label="Kapat" onclick="closeModal('modal-add-app')"><svg class="icon" aria-hidden="true"><use href="#icon-x"></use></svg></button>
+    </div>
+
+    <div class="form-group">
+      <label>Görünen Ad</label>
+      <input type="text" id="modal-app-name" class="form-control" placeholder="Örn: Discord">
+    </div>
+
+    <div class="form-group">
+      <label>İşlem Dosyası (.exe)</label>
+      <input type="text" id="modal-app-proc" class="form-control" placeholder="Örn: Discord.exe">
+    </div>
+
+    <div class="form-group">
+      <label>Dosya Konumu</label>
+      <input type="text" id="modal-app-path" class="form-control" readonly style="opacity: 0.8;">
+    </div>
+
+    <div class="form-group">
+      <label>Atanacak DNS Sağlayıcısı</label>
+      <select id="modal-app-dns" class="form-control">
+        <option value="cloudflare">Cloudflare (1.1.1.1)</option>
+        <option value="google">Google Public DNS (8.8.8.8)</option>
+        <option value="quad9">Quad9 (9.9.9.9)</option>
+        <option value="adguard">AdGuard DNS (94.140.14.14)</option>
+        <option value="opendns">OpenDNS (208.67.222.222)</option>
+      </select>
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+      <button class="btn btn-secondary" onclick="closeModal('modal-add-app')">İptal</button>
+      <button class="btn btn-primary" onclick="submitAppRuleModal()">Kuralı Kaydet</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- MODAL: CUSTOM DNS                              -->
+<!-- ============================================== -->
+<div class="modal-overlay" id="modal-custom-dns">
+  <div class="modal-box">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <h3 style="font-size: 16px;">Özel DNS Sağlayıcısı Ekle</h3>
+      <button class="modal-close" type="button" aria-label="Kapat" onclick="closeModal('modal-custom-dns')"><svg class="icon" aria-hidden="true"><use href="#icon-x"></use></svg></button>
+    </div>
+
+    <div class="form-group">
+      <label>Sağlayıcı Adı</label>
+      <input type="text" id="modal-cust-name" class="form-control" placeholder="Örn: Özel DNS">
+    </div>
+
+    <div class="form-group">
+      <label>IPv4 Birincil Adres</label>
+      <input type="text" id="modal-cust-ip4-1" class="form-control" placeholder="Örn: 1.1.1.1">
+    </div>
+
+    <div class="form-group">
+      <label>IPv4 İkincil Adres (İsteğe bağlı)</label>
+      <input type="text" id="modal-cust-ip4-2" class="form-control" placeholder="Örn: 1.0.0.1">
+    </div>
+
+    <div class="form-group">
+      <label>IPv6 Birincil Adres (İsteğe bağlı)</label>
+      <input type="text" id="modal-cust-ip6-1" class="form-control" placeholder="Örn: 2606:4700:4700::1111">
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+      <button class="btn btn-secondary" onclick="closeModal('modal-custom-dns')">İptal</button>
+      <button class="btn btn-primary" onclick="submitCustomDNS()">Ekle & Uygula</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container"></div>
+
+<script src="js/charts.js"></script>
+<script src="js/app.js"></script>
+
+<script>
+async function submitCustomDNS() {
+  const name = document.getElementById('modal-cust-name').value.trim();
+  const ip41 = document.getElementById('modal-cust-ip4-1').value.trim();
+  const ip42 = document.getElementById('modal-cust-ip4-2').value.trim();
+  const ip61 = document.getElementById('modal-cust-ip6-1').value.trim();
+
+  if (!name || !ip41) {
+    showToast('Lütfen sağlayıcı adı ve birincil IPv4 adresini girin.', 'error');
+    return;
+  }
+
+  try {
+    await callGo('ApplyCustomDNS', name, ip41, ip42, ip61, '');
+    closeModal('modal-custom-dns');
+    showToast('Özel DNS kaydedildi ve uygulandı.', 'success');
+    loadDNSPage();
+    updateDashboard();
+  } catch (err) {
+    showToast('Özel DNS uygulanamadı: ' + err, 'error');
+  }
+}
+</script>
+
+</body>
+</html>

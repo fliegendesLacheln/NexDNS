@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXDNS — Windows İçin Gelişmiş DNS ve Ağ Yöneticisi</title>
+    <meta name="description" content="Windows 10 ve 11 için yüksek performanslı, taşınabilir ve modern açık kaynak DNS yöneticisi.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #0b0f19;
+            --surface: #111827;
+            --surface-hover: #1f293d;
+            --border: #1f293d;
+            --primary: #8b5cf6;
+            --primary-glow: rgba(139, 92, 246, 0.35);
+            --accent: #06b6d4;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Ambient Glow Background */
+        .ambient-glow {
+            position: fixed;
+            top: -20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1000px;
+            height: 600px;
+            background: radial-gradient(circle, var(--primary-glow) 0%, rgba(6, 182, 212, 0.15) 40%, transparent 70%);
+            filter: blur(100px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Navigation */
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.3rem;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px var(--primary-glow);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+        }
+
+        .btn-nav {
+            padding: 8px 18px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1100px;
+            margin: 60px auto 100px;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            padding: 6px 16px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            color: #c4b5fd;
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+
+        .badge-pill span {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px var(--success);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #a78bfa, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            max-width: 680px;
+            margin: 0 auto 36px;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            padding: 14px 28px;
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            box-shadow: 0 8px 25px var(--primary-glow);
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(139, 92, 246, 0.5);
+        }
+
+        .btn-secondary {
+            padding: 14px 28px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface-hover);
+            border-color: #334155;
+        }
+
+        .hero-specs {
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        /* Showcase Preview */
+        .showcase {
+            max-width: 1000px;
+            margin: 0 auto 120px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .showcase-info h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .showcase-info p {
+            color: var(--text-dim);
+            margin-bottom: 24px;
+            font-size: 1.05rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            color: #cbd5e1;
+        }
+
+        .feature-list li svg {
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        /* Interactive Tray Mockup (Glassmorphism) */
+        .tray-mockup-wrapper {
+            position: relative;
+        }
+
+        .tray-mockup-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -20px;
+            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+            filter: blur(40px);
+            z-index: 0;
+        }
+
+        .tray-card {
+            position: relative;
+            z-index: 1;
+            width: 310px;
+            background: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .tray-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .tray-brand {
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tray-status-live {
+            color: var(--success);
+            font-size: 0.78rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tray-latency-box {
+            background: rgba(31, 41, 55, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            font-size: 0.82rem;
+        }
+
+        .tray-latency-badge {
+            color: var(--success);
+            font-weight: 800;
+            background: rgba(16, 185, 129, 0.12);
+            padding: 3px 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+        }
+
+        .tray-toggle-track {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 4px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .tray-toggle-option {
+            text-align: center;
+            padding: 8px 0;
+            font-size: 0.82rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-dim);
+            z-index: 1;
+        }
+
+        .tray-toggle-option.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px var(--primary-glow);
+        }
+
+        .tray-mode-desc {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-align: center;
+            margin-bottom: 14px;
+        }
+
+        .tray-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.06);
+            margin: 0 -16px 14px;
+        }
+
+        .tray-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .tray-btn {
+            background: rgba(31, 41, 55, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-main);
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .tray-btn.exit {
+            color: #f87171;
+            background: rgba(239, 68, 68, 0.06);
+            border-color: rgba(239, 68, 68, 0.15);
+        }
+
+        /* How it works */
+        .section {
+            max-width: 1100px;
+            margin: 0 auto 120px;
+            padding: 0 20px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            color: var(--text-dim);
+            font-size: 1.05rem;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .step-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            position: relative;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .step-card:hover {
+            transform: translateY(-4px);
+            border-color: #334155;
+        }
+
+        .step-num {
+            width: 40px;
+            height: 40px;
+            background: rgba(139, 92, 246, 0.15);
+            color: #c4b5fd;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .step-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .step-card p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+        }
+
+        .feature-icon {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        /* Download Section */
+        .download-box {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.08));
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 24px;
+            padding: 60px 40px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .download-box h2 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .download-box p {
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            font-size: 1.05rem;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        @media (max-width: 850px) {
+            .hero h1 { font-size: 2.4rem; }
+            .showcase { grid-template-columns: 1fr; }
+            .steps-grid, .features-grid { grid-template-columns: 1fr; }
+            .tray-mockup-wrapper { display: flex; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="logo">
+            <div class="logo-icon">⚡</div>
+            <span>NEXDNS</span>
+        </a>
+        <div class="nav-links">
+            <a href="#nasil-kullanilir">Nasıl Kullanılır?</a>
+            <a href="#ozellikler">Özellikler</a>
+            <a href="#indir" class="btn-nav">İndir</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="badge-pill">
+            <span></span> Açık Kaynak & Windows 10/11 Taşınabilir
+        </div>
+        <h1>Windows İçin Gelişmiş<br><span>Ağ & DNS Yöneticisi</span></h1>
+        <p>
+            Karmaşık ağ ayarlarıyla uğraşmayın. Tek tıkla en hızlı DNS sunucusuna bağlanın, gerçek zamanlı ping ölçün ve Cloudflare WARP tarzı sistem tepsisiyle tüm ağınızı zahmetsizce yönetin.
+        </p>
+        <div class="hero-actions">
+            <a href="#indir" class="btn-primary">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Hemen İndir (NEXDNS.exe)
+            </a>
+            <a href="https://github.com" target="_blank" class="btn-secondary">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                GitHub Kaynak Kodu
+            </a>
+        </div>
+        <div class="hero-specs">
+            ✓ Kurulum gerektirmez &nbsp;•&nbsp; ✓ Telemetri / Veri toplama yok &nbsp;•&nbsp; ✓ Saf Go & WebView2
+        </div>
+    </header>
+
+    <!-- Showcase Section (System Tray Highlight) -->
+    <section class="showcase">
+        <div class="showcase-info">
+            <h2>Modern Sistem Tepsisi ile Arka Planda Sessiz Güç</h2>
+            <p>
+                Uygulama simge durumuna küçüldüğünde sizi rahatsız etmez. Sistem tepsisindeki (Tray) ikona tıkladığınızda açılan zarif Glassmorphism kartı ile anında mod değiştirebilir veya gecikme durumunuzu kontrol edebilirsiniz.
+            </p>
+            <ul class="feature-list">
+                <li>
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <strong>Canlı Ping Rozeti:</strong> DNS sunucunuzun anlık yanıt süresi.
+                </li>
+                <li>
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <strong>Pürüzsüz Kapsül Switch:</strong> Tüm Sistem ve Seçili Uygulama geçişi.
+                </li>
+                <li>
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <strong>Windows 11 Fluent Uyumu:</strong> Şeffaf, zarif ve yuvarlatılmış köşeler.
+                </li>
+            </ul>
+        </div>
+
+        <!-- Interactive Tray Card Preview -->
+        <div class="tray-mockup-wrapper">
+            <div class="tray-card">
+                <div class="tray-header">
+                    <div class="tray-brand">⚡ NEXDNS</div>
+                    <div class="tray-status-live">● Çevrimiçi</div>
+                </div>
+
+                <div class="tray-latency-box">
+                    <span style="color: #94a3b8;">📶 DNS Gecikmesi</span>
+                    <span class="tray-latency-badge">18 ms</span>
+                </div>
+
+                <div class="tray-toggle-track">
+                    <div class="tray-toggle-option active" id="optSystem" onclick="setMode('system')">Tüm Sistem</div>
+                    <div class="tray-toggle-option" id="optApp" onclick="setMode('app')">Seçili Uygulama</div>
+                </div>
+
+                <div class="tray-mode-desc" id="trayDesc">
+                    Tüm sistem trafiği NEXDNS ile korunuyor
+                </div>
+
+                <div class="tray-divider"></div>
+
+                <div class="tray-actions">
+                    <div class="tray-btn">🖥 NEXDNS'e Dön</div>
+                    <div class="tray-btn exit">⏻ Çıkış</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works Section -->
+    <section class="section" id="nasil-kullanilir">
+        <div class="section-header">
+            <h2>Nasıl Kullanılır?</h2>
+            <p>Üç adımda daha hızlı ve güvenli internete kavuşun.</p>
+        </div>
+
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-num">1</div>
+                <h3>İndirin ve Çalıştırın</h3>
+                <p>NEXDNS tek bir çalıştırılabilir (`.exe`) dosyadır. Kurulum gerektirmez, doğrudan çift tıklayarak başlatabilirsiniz.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">2</div>
+                <h3>DNS Sağlayıcınızı Seçin</h3>
+                <p>Cloudflare, Google, Quad9, AdGuard arasından dilediğinizi seçin veya kendi özel DNS sunucu adreslerinizi ekleyin.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">3</div>
+                <h3>Tek Tıkla Uygulayın</h3>
+                <p>"Uygula" butonuna basın. Ağ adaptörünüz otomatik yapılandırılır, eski ayarlarınız yedeklenir ve DNS önbelleğiniz temizlenir.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" id="ozellikler">
+        <div class="section-header">
+            <h2>Güçlü ve Gelişmiş Özellikler</h2>
+            <p>Performans ve gizlilik için tasarlandı.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Gerçek Ping Ölçümü</h3>
+                <p>DNS sağlayıcılarına RFC 1035 UDP A-query paketleri göndererek gerçek gidiş-dönüş süresini (RTT) ölçer.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎮</div>
+                <h3>Discord Bağlantı Teşhisi</h3>
+                <p>Ses soketi, Gateway, CDN ve HTTPS rotalarını 5 aşamada test ederek bağlantı sorunlarını anında tespit eder.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Canlı Trafik İzleyici</h3>
+                <p>Windows IP Helper API ile anlık indirme/yükleme hızlarını ve toplam oturum trafiğini donanım hızlandırmalı grafikle gösterir.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Güvenli Otomatik Yedekleme</h3>
+                <p>DNS değiştirmeden önce mevcut ayarlarınızı otomatik yedekler; tek tıkla DHCP'ye veya eski ayarlara dönebilirsiniz.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>7 Özel VIP Tema</h3>
+                <p>Midnight Purple, Cyber Neon, Obsidian Black ve diğer modern temalar arasında dilediğiniz gibi geçiş yapın.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Tamamen Yerel ve Güvenli</h3>
+                <p>Hiçbir veri sunuculara gönderilmez. Sıfır telemetri, sıfır takip; tüm işlemler yalnızca bilgisayarınızda gerçekleşir.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="section" id="indir">
+        <div class="download-box">
+            <h2>NEXDNS'i Hemen Deneyin</h2>
+            <p>
+                Windows 10 ve Windows 11 ile tam uyumlu. Taşınabilir, hafif ve tamamen ücretsiz açık kaynak sürüm.
+            </p>
+            <div class="hero-actions">
+                <a href="./NEXDNS.exe" download class="btn-primary" style="font-size: 1.15rem; padding: 16px 36px;">
+                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    NEXDNS.exe İndir (v1.0.0)
+                </a>
+            </div>
+            <div style="margin-top: 24px; font-size: 0.85rem; color: var(--text-dim);">
+                SHA-256 Doğrulanmış • x64 Portable • MIT Lisansı
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 NEXDNS — Açık Kaynak Topluluk Projesi. <a href="https://github.com" target="_blank">GitHub</a> üzerinde yayınlanmaktadır.</p>
+    </footer>
+
+    <!-- Interactive Tray Demo Script -->
+    <script>
+        function setMode(mode) {
+            const optSys = document.getElementById('optSystem');
+            const optApp = document.getElementById('optApp');
+            const desc = document.getElementById('trayDesc');
+            if (mode === 'system') {
+                optSys.classList.add('active');
+                optApp.classList.remove('active');
+                desc.innerText = 'Tüm sistem trafiği NEXDNS ile korunuyor';
+            } else {
+                optApp.classList.add('active');
+                optSys.classList.remove('active');
+                desc.innerText = 'Yalnızca seçili uygulamalar yönlendiriliyor';
+            }
+        }
+    </script>
+</body>
+</html>

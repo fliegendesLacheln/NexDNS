@@ -1,0 +1,243 @@
+/* ========================================================
+   NEXDNS — 7 VIP THEME DEFINITIONS
+   ======================================================== */
+
+:root, [data-theme="midnight-purple"] {
+  color-scheme: dark;
+  --bg-base: #09090e;
+  --bg-surface: #11111b;
+  --bg-card: #181826;
+  --bg-card-hover: #1f1f33;
+  --bg-input: #141420;
+  --border: #2b2b42;
+  --border-focus: #8b5cf6;
+  --primary: #8b5cf6;
+  --primary-hover: #7c3aed;
+  --primary-glow: rgba(139, 92, 246, 0.28);
+  --accent: #a855f7;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --text-on-primary: #ffffff;
+  --success: #10b981;
+  --success-glow: rgba(16, 185, 129, 0.2);
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --error-glow: rgba(239, 68, 68, 0.2);
+  --warning-glow: rgba(245, 158, 11, 0.16);
+  --sidebar-bg: #0c0c14;
+  --bg-disabled: #1b1b28;
+  --text-disabled: #64748b;
+  --switch-thumb: #f8fafc;
+  --modal-backdrop: rgba(0, 0, 0, 0.68);
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --modal-shadow-color: rgba(0, 0, 0, 0.5);
+  --chart-grid: rgba(148, 163, 184, 0.2);
+  --chart-line-down: #8b5cf6;
+  --chart-line-up: #06b6d4;
+}
+
+[data-theme="cyber-neon"] {
+  color-scheme: dark;
+  --bg-base: #050811;
+  --bg-surface: #0a1122;
+  --bg-card: #101c36;
+  --bg-card-hover: #16264a;
+  --bg-input: #0c162e;
+  --border: #1b325c;
+  --border-focus: #06b6d4;
+  --primary: #06b6d4;
+  --primary-hover: #0891b2;
+  --primary-glow: rgba(6, 182, 212, 0.32);
+  --text-on-primary: #06212a;
+  --accent: #3b82f6;
+  --text-main: #f8fafc;
+  --text-muted: #7dd3fc;
+  --text-dim: #0284c7;
+  --success: #10b981;
+  --success-glow: rgba(16, 185, 129, 0.25);
+  --warning: #f59e0b;
+  --error: #f43f5e;
+  --error-glow: rgba(244, 63, 94, 0.25);
+  --sidebar-bg: #070d1d;
+  --chart-line-down: #06b6d4;
+  --chart-line-up: #3b82f6;
+}
+
+[data-theme="obsidian-black"] {
+  color-scheme: dark;
+  --bg-base: #080808;
+  --bg-surface: #101010;
+  --bg-card: #161616;
+  --bg-card-hover: #1f1f1f;
+  --bg-input: #121212;
+  --border: #262626;
+  --border-focus: #e2e8f0;
+  --primary: #f1f5f9;
+  --primary-hover: #ffffff;
+  --primary-glow: rgba(241, 245, 249, 0.15);
+  --text-on-primary: #080808;
+  --accent: #94a3b8;
+  --text-main: #ffffff;
+  --text-muted: #a3a3a3;
+  --text-dim: #737373;
+  --success: #22c55e;
+  --success-glow: rgba(34, 197, 94, 0.15);
+  --warning: #eab308;
+  --error: #ef4444;
+  --error-glow: rgba(239, 68, 68, 0.15);
+  --sidebar-bg: #0b0b0b;
+  --chart-line-down: #ffffff;
+  --chart-line-up: #737373;
+}
+
+[data-theme="arctic-blue"] {
+  color-scheme: dark;
+  --bg-base: #091124;
+  --bg-surface: #0e1a38;
+  --bg-card: #15254f;
+  --bg-card-hover: #1c3269;
+  --bg-input: #111f44;
+  --border: #223c7a;
+  --border-focus: #38bdf8;
+  --primary: #38bdf8;
+  --primary-hover: #0284c7;
+  --primary-glow: rgba(56, 189, 248, 0.28);
+  --text-on-primary: #08243a;
+  --accent: #60a5fa;
+  --text-main: #f0f9ff;
+  --text-muted: #93c5fd;
+  --text-dim: #60a5fa;
+  --success: #34d399;
+  --success-glow: rgba(52, 211, 153, 0.2);
+  --warning: #fbbf24;
+  --error: #f87171;
+  --error-glow: rgba(248, 113, 113, 0.2);
+  --sidebar-bg: #0a142c;
+  --chart-line-down: #38bdf8;
+  --chart-line-up: #818cf8;
+}
+
+[data-theme="emerald-pro"] {
+  color-scheme: dark;
+  --bg-base: #04120a;
+  --bg-surface: #081e11;
+  --bg-card: #0d2c1a;
+  --bg-card-hover: #133c24;
+  --bg-input: #0a2415;
+  --border: #16482a;
+  --border-focus: #10b981;
+  --primary: #10b981;
+  --primary-hover: #059669;
+  --primary-glow: rgba(16, 185, 129, 0.3);
+  --text-on-primary: #032416;
+  --accent: #34d399;
+  --text-main: #ecfdf5;
+  --text-muted: #6ee7b7;
+  --text-dim: #34d399;
+  --success: #10b981;
+  --success-glow: rgba(16, 185, 129, 0.25);
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --error-glow: rgba(239, 68, 68, 0.2);
+  --sidebar-bg: #06170d;
+  --chart-line-down: #10b981;
+  --chart-line-up: #34d399;
+}
+
+[data-theme="crimson-elite"] {
+  color-scheme: dark;
+  --bg-base: #100606;
+  --bg-surface: #1a0b0b;
+  --bg-card: #271212;
+  --bg-card-hover: #361a1a;
+  --bg-input: #1f0e0e;
+  --border: #441d1d;
+  --border-focus: #ef4444;
+  --primary: #ef4444;
+  --primary-hover: #dc2626;
+  --primary-glow: rgba(239, 68, 68, 0.32);
+  --text-on-primary: #350b0b;
+  --accent: #f87171;
+  --text-main: #fff1f2;
+  --text-muted: #fda4af;
+  --text-dim: #f43f5e;
+  --success: #10b981;
+  --success-glow: rgba(16, 185, 129, 0.2);
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --error-glow: rgba(239, 68, 68, 0.25);
+  --sidebar-bg: #140808;
+  --chart-line-down: #ef4444;
+  --chart-line-up: #fb7185;
+}
+
+[data-theme="light-professional"] {
+  color-scheme: light;
+  --bg-base: #f1f5f9;
+  --bg-surface: #ffffff;
+  --bg-card: #f8fafc;
+  --bg-card-hover: #f1f5f9;
+  --bg-input: #ffffff;
+  --border: #cbd5e1;
+  --border-focus: #2563eb;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-glow: rgba(37, 99, 235, 0.25);
+  --text-on-primary: #ffffff;
+  --accent: #3b82f6;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-dim: #64748b;
+  --success: #059669;
+  --success-glow: rgba(5, 150, 105, 0.15);
+  --warning: #d97706;
+  --error: #dc2626;
+  --error-glow: rgba(220, 38, 38, 0.15);
+  --warning-glow: rgba(217, 119, 6, 0.14);
+  --sidebar-bg: #e2e8f0;
+  --bg-disabled: #e2e8f0;
+  --text-disabled: #94a3b8;
+  --switch-thumb: #ffffff;
+  --modal-backdrop: rgba(15, 23, 42, 0.36);
+  --shadow-color: rgba(15, 23, 42, 0.14);
+  --modal-shadow-color: rgba(15, 23, 42, 0.24);
+  --chart-grid: rgba(100, 116, 139, 0.2);
+  --chart-line-down: #2563eb;
+  --chart-line-up: #059669;
+}
+
+[data-theme="graphite-aurora"] {
+  color-scheme: dark;
+  --bg-base: #171820;
+  --bg-surface: #1f2029;
+  --bg-card: #262833;
+  --bg-card-hover: #303340;
+  --bg-input: #20212b;
+  --border: #393b48;
+  --border-focus: #a78bfa;
+  --primary: #7c3aed;
+  --primary-hover: #6d28d9;
+  --primary-glow: rgba(124, 58, 237, 0.3);
+  --text-on-primary: #ffffff;
+  --accent: #22d3ee;
+  --text-main: #f4f4f6;
+  --text-muted: #b0b2bf;
+  --text-dim: #7f8291;
+  --success: #34d399;
+  --success-glow: rgba(52, 211, 153, 0.2);
+  --warning: #fbbf24;
+  --warning-glow: rgba(251, 191, 36, 0.16);
+  --error: #fb7185;
+  --error-glow: rgba(251, 113, 133, 0.2);
+  --sidebar-bg: #14151c;
+  --bg-disabled: #22232c;
+  --text-disabled: #717584;
+  --switch-thumb: #f8fafc;
+  --modal-backdrop: rgba(9, 10, 15, 0.72);
+  --shadow-color: rgba(0, 0, 0, 0.32);
+  --modal-shadow-color: rgba(0, 0, 0, 0.52);
+  --chart-grid: rgba(167, 139, 250, 0.22);
+  --chart-line-down: #a78bfa;
+  --chart-line-up: #22d3ee;
+}
